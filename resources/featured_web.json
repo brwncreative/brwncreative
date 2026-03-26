@@ -1,0 +1,29 @@
+{
+    "0": {
+        "project": "Maxsonic Elite Brand Platform",
+        "tags": ["e-catalog", "blog", "information-hub"],
+        "turnaround": "3 weeks",
+        "problem-solved": "dsadsa",
+        "takeaways": ["users", "second"],
+        "media": [
+            { "type": "image", "url": "web/max/max (1).jpg" },
+            { "type": "image", "url": "web/max/max (2).jpg" }
+        ],
+        "tech": [
+            "laravel",
+            "laravel livewire",
+            "after effects",
+            "photoshop",
+            "lottie"
+        ]
+    },
+    "1": {
+        "project": "BM Electronics Ltd. Website",
+        "tags": ["e-catalog", "e-commerce", "instructional"],
+        "turnaround": "4 weeks",
+        "problem-solved": "",
+        "takeaways": [],
+        "media": {},
+        "tech": ["laravel", "laravel livewire", "after effects", "photoshop"]
+    }
+}

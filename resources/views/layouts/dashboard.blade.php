@@ -2,20 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2GVQZPZJ5"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-W2GVQZPZJ5');
-    </script>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="icon" href="{{ asset('brwncreative_mascot.svg') }}" type="image/svg">
 
-    <title>Brwncreative</title>
+    <title>Brwncreative Backend</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,9 +25,6 @@
 <body class="gfont">
     {{-- Main Content --}}
     {{ $slot }}
-
-    {{-- Footer --}}
-    <livewire:footer lazy />
     @livewireScripts
 </body>
 
