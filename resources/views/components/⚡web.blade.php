@@ -13,15 +13,17 @@ new class extends Component
 };
 ?>
 
-<section class="text-white pb-25" x-data="{
+<main class="text-white pb-25" x-data="{
  
 }">
     {{-- Introduction --}}
-    <hgroup class="px-5 flex items-center justify-center flex-col text-center">
-        <h1 class="text-7xl robofont capitalize appear opacity-0 max-w-[400px] break-words">Get your business online
+    <hgroup class="px-5 flex items-center justify-center flex-col gap-4 text-center">
+        <h1 class="text-7xl robofont capitalize appear opacity-0 max-w-[600px] break-words font-medium">Get your
+            business online
             faster
         </h1>
-        <p class="text-lg px-5 mt-1 appear opacity-0 max-w-[400px] mt-2 break-words" style="animation-delay: 100ms">
+        <p class="text-[1.2rem] px-5 mt-1 appear opacity-0 max-w-[500px] mt-2 break-words"
+            style="animation-delay: 100ms">
             Every day your business remains <b>offline</b> is a day of <b>lost revenue and missed leads.</b> Let your
             competitors be
             the ones stuck in 'coming soon' limbo and let me cut through the technical noise and <b>open those digital
@@ -29,7 +31,8 @@ new class extends Component
         </p>
     </hgroup>
     {{-- What we offer --}}
-    <div class="flex items-center justify-center my-12 appear px-5 opacity-0" style="animation-delay: 200ms" x-data="{
+    <section id="services" class="flex items-center justify-center my-12 appear px-5 opacity-0"
+        style="animation-delay: 200ms" x-data="{
        offerings:[
         ['e-commerce','bi bi-cart-fill', 'text-[#52a341]'],
         ['blog','bi bi-bookmark-heart-fill','text-[#a073ef]'],
@@ -46,20 +49,20 @@ new class extends Component
     }else{
     this.highlighting = 0;
     }
-    },1000)
+    },3000)
     }
     }">
-        <div class="flex items-center gap-4 justify-center flex-wrap">
-            <template x-for="(offer, offer_index) in offerings">
-                <div class="p-2 bg-[#212121] rounded-4xl">
-                    <div class="select-none flex items-center gap-3 p-1 px-5 pl-3 bg-black rounded-4xl cursor-pointer">
+        <div class="flex items-center gap-2 justify-center flex-wrap">
+            <template x-for="(offer, offer_index) in offerings" :key="`web-${offer_index}`">
+                <div class="p-2 bg-[#212121] rounded-4xl" :class="highlighting == offer_index ? `roomy` : null">
+                    <div class="select-none flex items-center gap-3 p-1 px-5 pl-3 bg-black rounded-4xl transition-all cursor-pointer">
                         <i :class="`${offer[1]} ${offer[2]}`" class="text-sm"></i>
                         <p x-text="offer[0]" class="capitalize text-lg"></p>
                     </div>
                 </div>
             </template>
         </div>
-    </div>
+    </section>
     {{-- Guarantees --}}
     <div class="px-5 min-[1200px]:px-10 appear opacity-0 mb-10" style="animation-delay: 300ms">
         <hgroup>
@@ -70,10 +73,10 @@ new class extends Component
         {{-- List --}}
         <div class="list mt-5" x-data="{
         guarantees: [
-        ['SEO Optimization','Get your website seen! We take special care to ensure your website is well formatted and search compliant so you appear higher on results regardless of traffic.',''],
-        ['Mobile/ Tablet friendly',`Websites aren't just made for the computer; Your website will work on every device ensuring users have a seamless experience and you don't have to compromise your vision`,''],
-        ['Speed',`You're not slowing down so why should your website? We keep load times down so even patient users are surprised, even with 10,000 users!`,''],
-        ['Security Best Practice',`We follow cyber security best practices to ensure your, and your clients', data is secure.`,'']
+        ['SEO Optimization','Get your website seen! We take special care to ensure your website is well formatted and search compliant so you appear higher on results regardless of traffic.','bi bi-search-heart'],
+        ['Mobile/ Tablet friendly',`Websites aren't just made for the computer; Your website will work on every device ensuring users have a seamless experience and you don't have to compromise your vision`,'bi bi-phone'],
+        ['Speed',`You're not slowing down so why should your website? We keep load times down so even patient users are surprised, even with 10,000 users!`,'bi bi-speedometer2'],
+        ['Security Best Practice',`We follow cyber security best practices to ensure your, and your clients', data is secure.`,'bi bi-fingerprint']
         ]
         }">
             <ul class="flex flex-wrap gap-4 max-sm:gap-0 justify-center">
@@ -82,7 +85,8 @@ new class extends Component
                     <li class="guarantee max-sm:w-[50%] w-[250px] max-sm:px-3 max-sm:even:pl-0 max-sm:odd:pr-0 mb-5">
                         <div class="bg-gray-200 rounded p-3 pb-5 px-5 text-black w-full">
                             <div
-                                class="w-[50px] h-[50px] shadow-md shadow-black/40 border-b border-gray-800 mb-4 bg-gray-400 rounded-4xl">
+                                class="w-[50px] h-[50px] shadow-lg shadow-black/40 flex items-center justify-center text-[1.8rem] border-b border-gray-800 mb-4 bg-gray-300 rounded-4xl">
+                                <i :class="guarantee[2]"></i>
                             </div>
                             <hgroup>
                                 <h3 class="text-3xl capitalize break-words max-sm:break-all robofont leading-8 tracking-tight mb-5"
@@ -96,7 +100,7 @@ new class extends Component
         </div>
     </div>
     {{-- Portfolio --}}
-   
+
     {{-- Rates --}}
     <div class="px-5 min-[1200px]:px-10 appear opacity-0" style="animation-delay: 400ms" x-data="{
     current: 'easy',
@@ -147,7 +151,7 @@ new class extends Component
                     </ul>
                     <hgroup class="leading-8 w-full px-5">
                         <p>Starting from</p>
-                        <p class="text-6xl robofont">$1,500</p>
+                        <p class="text-6xl gfont">$1,500</p>
                         <p class="text-gray-700 leading-5 text-sm mt-2">Domain free for one year. Maintenance costs do
                             apply after site is finished</p>
                     </hgroup>
@@ -175,7 +179,7 @@ new class extends Component
                     </ul>
                     <hgroup class="leading-8 w-full px-5">
                         <p>Starting from</p>
-                        <p class="text-6xl robofont">$999</p>
+                        <p class="text-6xl gfont">$999</p>
                         <p class="text-gray-700 leading-5 text-sm mt-2">Domain free for one year. Maintenance costs do
                             apply after site is finished</p>
                     </hgroup>
@@ -210,7 +214,7 @@ new class extends Component
                     </ul>
                     <hgroup class="leading-8 w-full px-5">
                         <p>Starting from</p>
-                        <p class="text-6xl robofont">$2,500</p>
+                        <p class="text-6xl gfont">$2,500</p>
                         <p class="text-gray-700 leading-5 text-sm mt-2">Domain free for one year. Maintenance costs do
                             apply after site is finished</p>
                     </hgroup>
@@ -220,4 +224,4 @@ new class extends Component
             </ul>
         </div>
     </div>
-</section>
+</main>

@@ -12,11 +12,13 @@ new #[Layout('layouts::dashboard')] class extends Component
     public function login()
     {
         $this->validate(['email' => 'required|email', 'password' => 'required|min:5']);
-
         $user = DB::table('users')->where('email', '=', $this->email)->first(['name', 'email', 'password']);
         if ($user) {
             if (Hash::check($this->password, $user->password)) {
-                
+                // User has been authenticated
+                session()->regenerate();
+                session()->put('user', $user);
+                redirect()->route('dashboard');
             } else {
                 $this->message = 'Password may be incorrect';
             }
@@ -32,9 +34,11 @@ new #[Layout('layouts::dashboard')] class extends Component
     password: $wire.entangle('password')
 }">
     <a wire:navigate href="/">
-        <img src="{{ asset('brwncreative.svg') }}" class="h-[45px] mb-8" alt="Brwncreative Logo Long-Variant">
+        <img src="{{ asset('brwncreative.svg') }}" class="h-[45px] mb-8 appear opacity-0"
+            alt="Brwncreative Logo Long-Variant">
     </a>
-    <section id="login-container" class="w-[500px] max-lg:w-[100%] shadow-md border border-gray-400 rounded-lg p-3">
+    <section id="login-container" class="w-[500px] max-lg:w-[100%] shadow-md rounded-lg appear opacity-0"
+        style="animation-delay: 100ms">
         <hgroup class="leading-10 flex gap-4 items-center">
             <h1 class="text-4xl font-medium">Login</h1>
             <div wire:loading role="status">
@@ -65,12 +69,16 @@ new #[Layout('layouts::dashboard')] class extends Component
         @if($errors->any())
         <div class="errors flex my-3 flex-wrap gap-1">
             @foreach($errors->all() as $key => $error)
-            <p class="text-red-500 border border-red-500 px-3 py-1 bg-red-100 rounded-4xl">{{ $error }}</p>
+            <p class="text-red-500 border border-red-500 px-3 py-1 bg-red-50 rounded-4xl">{{ $error }}</p>
             @endforeach
         </div>
         @endif
-        
+        @if($message)
+        <div class="errors flex my-3 flex-wrap gap-1">
+            <p class="text-red-500 border border-red-500 px-3 py-1 bg-red-50 rounded-4xl">{{ $message}}</p>
+        </div>
+        @endif
         <button x-on:click="$wire.login()"
-            class="bg-black text-white cursor-pointer active:opacity-50 select-none px-5 w-full py-2 rounded-lg shadow-md">Login</button>
+            class="bg-black text-white cursor-pointer active:opacity-50 select-none px-5 w-full py-2 rounded-lg shadow-lg shadow-black/50">Login</button>
     </section>
 </main>

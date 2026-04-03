@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="icon" href="{{ asset('brwncreative_mascot.svg') }}" type="image/svg">
 
-    <title>Brwncreative Backend</title>
+    <title>Brwncreative | Backend</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,10 @@
 <body class="gfont">
     {{-- Main Content --}}
     {{ $slot }}
+    {{-- Footer --}}
+    <footer class="text-center flex items-center justify-center mt-10">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, suscipit? Vitae a, architecto
+        autem, totam et quos eligendi voluptatibus expedita aspernatur fugit ratione recusandae corporis obcaecati
+        debitis. Corporis, molestias libero.</footer>
     @livewireScripts
 </body>
 

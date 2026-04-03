@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use App\Mail\AccountReview;
 
 class MailMan implements ShouldQueue
 {
@@ -12,7 +13,7 @@ class MailMan implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(public $what, public $client)
     {
         //
     }
@@ -22,6 +23,10 @@ class MailMan implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        switch($this->what){
+            case 'account-review':
+                
+                break;
+        }
     }
 }
