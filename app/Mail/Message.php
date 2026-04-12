@@ -11,14 +11,14 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
-class AccountReview extends Mailable
+class Message extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(public $client)
+    public function __construct(public $payload)
     {
         //
     }
@@ -29,9 +29,9 @@ class AccountReview extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('kareem.williams@brwncreative.com', 'Kareem Williams'),
-            subject: "{$this->client->name} | Account Statement",
-            tags: ['account', 'account balance', 'invoice'],
+            from: new Address('kareem.williams@brwncreative.com','Kareem Williams'),
+            tags: ['message','outreach','small-business'],
+            subject: $this->payload['subject'],
         );
     }
 
@@ -41,7 +41,7 @@ class AccountReview extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.review',
+            view: 'mail.message',
         );
     }
 

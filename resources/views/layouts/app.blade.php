@@ -24,7 +24,9 @@
         rel="stylesheet">
     {{-- External --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.13.0/lottie.min.js"
+        integrity="sha512-uOtp2vx2X/5+tLBEf5UoQyqwAkFZJBM5XwGa7BfXDnWR+wdpRvlSVzaIVcRe3tGNsStu6UMDCeXKEnr4IBT8gA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles

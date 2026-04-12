@@ -10,14 +10,6 @@ new class extends Component
         'message' => ''
     ];
 
-    public function email(){
-        $this->validate([
-           'contact_package.name'=>'required|min:1',
-           'contact_package.message'=>'required|min:2' 
-        ]);
-
-    }
-
     public function resume()
     {
         return response()->download(
@@ -35,12 +27,41 @@ new class extends Component
 </footer>
 @endplaceholder
 
-<footer class="mt-8" x-data="{
+<footer x-data="{
 inputs: $wire.entangle('contact_package')
 }
 ">
+    {{-- Sticker --}}
+    <div class="flex h-[0px] relative items-center justify-center">
+        <img class="h-[60px] absolute top-[-30px]" loading="lazy" src="{{ asset('brwncreative_w_offset.svg') }}"
+            alt="brwncreative logo">
+    </div>
+    {{-- About Me --}}
+    <div id="about-me"
+        class="bg-gray-100 px-5 py-4 max-lg:pt-15 flex gap-15 min-h-[250px] flex items-center max-lg:flex-col max-lg:gap-5">
+        <div
+            class="img rounded-lg shadow-md relative h-[200px] max-lg:h-[100px] w-[25%] max-lg:w-[35%] overflow-hidden flex items-center justify-center">
+            <img class="absolute top-[-25px] max-lg:top-0 max-w-full"
+                src="{{ asset('kareem_williams_brwncreative.webp') }}" alt="">
+        </div>
+        <div>
+            <hgroup>
+                <h2 class="text-2xl font-medium">About Me</h2>
+                <p class="text-[1.2rem] max-lg:text-[1rem] max-w-[800px]">Hi there, my name is Kareem 'Brwncreative'
+                    Williams, and I continue to cultivate my skillsets in digital media and software development, off
+                    the heels of receiving my tertiary education. As an art kid, turned curious nerdy teen and now
+                    realized adult, I marry my creative indulgence with the technicality, and potential, of the software
+                    and web spaces, to create solutions and experiences that are well rounded, unique and beneficial to
+                    any and all of my end users/ consumers. </p>
+            </hgroup>
+            <button x-on:click="$wire.resume()"
+                class="flex w-[450px] max-sm:w-[100%] mt-5 items-center justify-center gap-4 px-5 py-2 bg-brwn text-white rounded-4xl border-b shadow-md shadow-[#643e34]/80 border-[#643e34] text-[1.1rem]">
+                <i class="bi bi-box-arrow-down"></i> Download Resume
+            </button>
+        </div>
+    </div>
     {{-- Trusted By Section --}}
-    <section id="trusted-by" class="mb-6 flex items-center justify-center flex-col gap-3">
+    <section id="trusted-by" class="my-15 flex items-center justify-center flex-col gap-3">
         <hgroup class="text-center">
             <h1 class="text-4xl font-medium">Trusted By</h1>
             <p class="text-[1.2rem]">Innovators and market leaders like</p>
@@ -48,11 +69,10 @@ inputs: $wire.entangle('contact_package')
         <div class="trust-list w-[100%] relative flex items-center justify-center" x-data="{
             logos: ['bmelectronics','hyatt','pbs','vgor']
             }">
-            <ul class="flex flex-wrap items-center justify-center h-full">
+            <ul class="flex flex-wrap gap-15 items-center justify-center h-full">
                 <template x-for="(logo , logo_index) in logos" :key='logo_index+`-{{ rand(0,1000) }}`'>
-                    <li class=" h-[100px] w-[100px] p-3 box-border">
-                        <div
-                            class="h-full w-full border rounded border-gray-300 box-border p-3 flex items-center justify-center bg-white shadow-md shadow-black/30">
+                    <li class=" h-[80px] w-[80px] p-3 box-border">
+                        <div class="h-full w-full flex items-center justify-center bg-white  shadow-black/30">
                             <img loading="lazy" :src="`trusted/${logo}.webp`" :alt="`${logo}-logo`"
                                 class="max-h-full max-w-full">
                         </div>
@@ -62,8 +82,8 @@ inputs: $wire.entangle('contact_package')
         </div>
     </section>
     {{-- Contact Me --}}
-    <section id="contact-me" class="flex items-center justify-center flex-col gap-3 pb-10 px-5 box-border">
-        <div class="border shadow-md border-gray-400 rounded-2xl w-[450px] max-sm:w-[100%] p-3 box-border">
+    {{-- <section id="contact-me" class="flex items-center justify-center flex-col gap-3 pb-10 px-5 box-border">
+        <div class="rounded-2xl w-[450px] max-sm:w-[100%] p-3 box-border">
             <hgroup class="mb-4">
                 <h2 class="text-2xl font-medium">Contact Me</h2>
                 <div class="contacts mt-2 flex flex-wrap gap-1">
@@ -86,13 +106,6 @@ inputs: $wire.entangle('contact_package')
                         class="bi bi-whatsapp"></i> WhatsApp</a>
             </div>
         </div>
-        <button x-on:click="$wire.resume()"
-            class="flex w-[450px] max-sm:w-[100%] items-center justify-center gap-4 px-5 py-2 bg-brwn text-white rounded-4xl border-b shadow-md shadow-[#643e34]/80 border-[#643e34] text-[1.1rem]">
-            <i class="bi bi-box-arrow-down"></i> Download Resume
-        </button>
-    </section>
-    {{-- Disclaimer --}}
-    <div class="flex items-center justify-center">
-        <img class="h-[35px] my-5 mb-15" loading="lazy" src="{{ asset('brwncreative.svg') }}" alt="brwncreative logo">
-    </div>
+    </section> --}}
+
 </footer>

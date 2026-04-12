@@ -21,7 +21,10 @@ new class extends Component
     {
         $this->clients = DB::table('clients')->get()->chunk(5);
     }
-
+    public function editClient($client)
+    {
+        $this->client = $client;
+    }
     public function deleteClient($id)
     {
         DB::table('clients')->delete($id);
@@ -33,7 +36,7 @@ new class extends Component
 
     public function mail($id)
     {
-        MailMan::dispatch(what: 'account-review', client: $id)->delay(rand(1, 100));
+        MailMan::dispatch(what: 'account-review', client: $id);
     }
 
     public function saveClient()
@@ -60,7 +63,6 @@ new class extends Component
             self::freshClient();
         }
     }
-
     public function freshClient()
     {
         $this->client = ['id' => null, 'name' => null, 'description' => null, 'address' => null, 'balance' => null, 'email' => null, 'phone' => '1868'];
@@ -76,51 +78,45 @@ new class extends Component
 <main id="clients-menu" class="px-5" x-data="{
     clients: $wire.entangle('clients'),
     client: $wire.entangle('client'),
-    editClient(key){
-     this.client.id = this.clients[this.page][key].id;
-        this.client.name = this.clients[this.page][key].name;
-         this.client.address = this.clients[this.page][key].address;
-          this.client.description = this.clients[this.page][key].description;
-           this.client.balance = this.clients[this.page][key].balance;
-            this.client.email = this.clients[this.page][key].email;
-             this.client.phone = this.clients[this.page][key].phone;
-    },
     page: 0
 }">
     <section id="client-container" class="grid grid-cols-2">
-        <div
-            class="list border border-gray-400 overflow-y-scroll h-[500px] max-h-[500px] overflow-x-hidden flex flex-col">
-            <template x-if="clients.length > 0">
-                <template x-for="(customer, client_index) in clients[page]">
-                    <div class="p-3 px-5 border-b border-gray-400">
-                        <hgroup class="leading-5">
-                            <p class="text-sm text-gray-400" x-text="customer.id"></p>
-                            <p class="font-medium" x-text="customer.name"></p>
-                            <p class="text-sm line-clamp-1 text-gray-600" x-text="customer.description"></p>
-                            <p class="font-bold animate-pulse bg-[#d5e3ce] w-max p-3 py-2 my-2 border-l-2 border-l-green-800"
-                                x-text="`$`+ Number(customer.balance).toFixed(2)"></p>
-                        </hgroup>
-                        <div class="actions flex gap-2 justify-end items-center">
-                            <a href="">
-                                <i
-                                    class="bi bi-whatsapp cursor-pointer hover:bg-gray-200 active:opacity-50 rounded-4xl border bg-gray-100 border-gray-400 flex items-center justify-center w-[30px] h-[30px]"></i>
-                            </a>
-                            <i x-on:click="$wire.mail(customer.id)"
-                                class="bi bi-envelope cursor-pointer hover:bg-gray-200 active:opacity-50 rounded-4xl border bg-gray-100 border-gray-400 flex items-center justify-center w-[30px] h-[30px]"></i>
-                            <i x-on:click="editClient(client_index)"
-                                class="bi bi-pencil cursor-pointer hover:bg-gray-200 active:opacity-50 rounded-4xl border bg-gray-100 border-gray-400 flex items-center justify-center w-[30px] h-[30px]"></i>
-                            <i x-on:click="confirm(`Are you sure you want to delete client: ${customer.name}`) ? $wire.deleteClient(customer.id) : null"
-                                class="bi bi-trash hover:bg-red-50 text-gray-500 hover:text-red-500 cursor-pointer active:opacity-50 rounded-4xl border hover:border-red-500 flex items-center justify-center w-[30px] h-[30px]"></i>
+        <div class="db">
+            <div
+                class="w-full border border-gray-400 p-3 px-4 box-border flex flex-col gap-3 overflow-y-auto max-h-[500px] h-[500px]">
+                <template x-if="clients.length > 0">
+                    <template x-for="(customer, client_index) in clients[page]">
+                        <div
+                            class="w-full border-l-4 bg-gray-100 p-3 px-4 border border-brwn shadow-md shadow-black/20 box-border">
+                            <hgroup>
+                                <p class="font-medium" x-text="customer.name"></p>
+                                <p class="line-clamp-1" x-text="customer.description"></p>
+                                <p class="font-bold animate-pulse text-lg"
+                                    x-text="`$`+ Number(customer.balance).toFixed(2)"></p>
+                            </hgroup>
+                            <div class="actions flex gap-2 justify-end mt-2">
+                                <a href="">
+                                    <i
+                                        class="bi bi-whatsapp border hover:opacity-50 border-gray-400 cursor-pointer active:opacity-50 bg-white rounded-lg shadow-black/40 w-[35px] h-[35px] shadow-lg flex items-center justify-center"></i>
+                                </a>
+                                <i x-on:click="$wire.mail(customer.id)"
+                                    class="bi bi-envelope border hover:opacity-50 border-gray-400 cursor-pointer active:opacity-50 bg-white rounded-lg shadow-black/40 w-[35px] h-[35px] shadow-lg flex items-center justify-center"></i>
+                                <i x-on:click="$wire.editClient(customer)"
+                                    class="bi bi-pencil border hover:opacity-50 border-gray-400 cursor-pointer active:opacity-50 bg-white rounded-lg shadow-black/40 w-[35px] h-[35px] shadow-lg flex items-center justify-center"></i>
+                                <i x-on:click="confirm(`Are you sure you want to delete client: ${customer.name}`) ? $wire.deleteClient(customer.id) : null"
+                                    class="bi bi-trash border hover:opacity-50 border-red-500 text-red-500 cursor-pointer active:opacity-50 bg-red-50 rounded-lg shadow-red-500/40 w-[35px] h-[35px] shadow-lg flex items-center justify-center"></i>
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </template>
-            </template>
-            <template x-if="clients.length < 1">
-                <hgroup>
-                    <p class="text-2xl max-w-[200px] capitalize text-gray-500 animate-pulse p-3 px-5">No clients have
-                        been added yet</p>
-                </hgroup>
-            </template>
+                <template x-if="clients.length < 1">
+                    <hgroup>
+                        <p class="text-2xl max-w-[200px] capitalize text-gray-500 animate-pulse p-3 px-5">No clients
+                            have
+                            been added yet</p>
+                    </hgroup>
+                </template>
+            </div>
         </div>
         <div class="form px-5">
             {{-- Greeting --}}

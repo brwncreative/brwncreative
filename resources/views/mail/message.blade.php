@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Review</title>
+    <title>Message from Brwncreative</title>
     <!--[if mso]>
     <xml>
       <o:OfficeDocumentSettings>
@@ -21,6 +21,7 @@
     <link
         href="https://fonts.upset.dev/css2?family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     <style>
         body {
             font-family: "Roboto", sans-serif;
@@ -29,7 +30,7 @@
             font-style: normal;
             font-variation-settings: "wdth" 100;
         }
-          @media only screen and (max-width: 600px){
+        @media only screen and (max-width: 600px){
             #container{
                 width: 95% !important
             }
@@ -61,63 +62,13 @@
             <tr>
                 <td style="height: 10px"></td>
             </tr>
-            {{-- Greeting --}}
+            {{-- Main --}}
             <tr>
                 <td>
                     <center>
-                        <p style="width: 90%; text-align: left; margin: 0px;font-size:2rem;">
-                            Hi <b> {{ $client->name }}</b>
-                        </p>
-                    </center>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <p style="width: 90%; text-align: left;">
-                            Please see detailed below a review of your account as of <b> {{ date('m/d/Y h:i:s a',
-                                time()) }}</b>. If anything seems out of place, feel free to contact me at 768-7915 or
-                            kareem.williams@brwncreative.com.
-                        </p>
-                    </center>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <p style="width: 90%; text-align: left; margin:0px">
-                            <b> Client name:</b> {{ $client->name }}
-                        </p>
-                    </center>
-                    <center>
-                        <p style="width: 90%; text-align: left; margin:0px">
-                            <b> Description:</b> {{ $client->description }}
-                        </p>
-                    </center>
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <center>
-                        <p style="width: 90%; text-align: left; margin:0px">
-                            Your outstanding balance is as follows:
-                        </p>
-                    </center>
-                    <center>
-                        <p style="width: 90%; text-align: left;font-weight: 600; margin-block:10px; font-size: 2rem;">
-                            ${{ number_format($client->balance,2) }}
-                        </p>
+                        <div style="width: 95%; text-align: left;">
+                            {!! $payload['body'] !!}
+                        </div>
                     </center>
                 </td>
             </tr>

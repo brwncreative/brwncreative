@@ -25,7 +25,7 @@ new #[Layout('layouts::dashboard')] class extends Component
 <section id="dashboard" x-data="{
     menus:['portfolio','mail','clients'],
     current_menu: $wire.entangle('current_menu'),
-}">
+}" class="pb-10">
     {{-- Navigation --}}
     <header>
         <nav>
@@ -34,6 +34,7 @@ new #[Layout('layouts::dashboard')] class extends Component
                     <img class="h-[30px]" src="{{ asset('brwncreative.svg') }}" alt="">
                 </a>
             </div>
+            {{-- Regular Navs --}}
             <div class="navigation flex gap-2 pb-5 overflow-x-auto px-5">
                 <template x-for="(menu, menu_index) in menus" :key="menu_index">
                     <a wire:navigate :href="`?menu=${menu}`"
@@ -41,6 +42,7 @@ new #[Layout('layouts::dashboard')] class extends Component
                         class="capitalize text-gray-500 transition-all duration-200 hover:bg-gray-100 cursor-pointer select-none text-[.95rem] min-w-max px-3 py-1 border border-gray-400 rounded-4xl"
                         x-text="menu"></a>
                 </template>
+                {{-- Logout --}}
                 <p x-on:click="$wire.logout()"
                     class="capitalize flex items-center gap-2 text-red-500 transition-all duration-200 bg-red-50 cursor-pointer select-none text-[.95rem] min-w-max px-3 py-1 border border-red-400 rounded-4xl">
                     <i class="bi bi-door-closed-fill"></i> Logout
@@ -56,8 +58,8 @@ new #[Layout('layouts::dashboard')] class extends Component
     @if($current_menu == 'portfolio')
     <livewire:dashboard.portfolio defer :key="`portfolio-menu`.time()" />
     @endif
-    @if($current_menu == 'shop')
-    <div></div>
+    @if($current_menu == 'mail')
+    <livewire:dashboard.mail :key="`portfolio-mail`.time()" />
     @endif
     @if($current_menu == null)
     <div class="px-5">

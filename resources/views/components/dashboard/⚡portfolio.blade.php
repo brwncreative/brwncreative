@@ -214,9 +214,9 @@ this.work.tags.splice(key,1);
                                 <div
                                     class="h-full w-[120px] min-w-[120px] border border-gray-400 bg-gray-100 flex items-center justify-center">
                                     @if(gettype($media['image']) == 'object')
-                                    <img class="max-w-[80%]" src="{{ $media['image']->temporaryUrl() }}">
+                                    <img class="max-w-[80%] max-h-full" src="{{ $media['image']->temporaryUrl() }}">
                                     @else
-                                    <img class="max-w-[80%]" src="{{ $media['image'] }}">
+                                    <img class="max-w-[80%] max-h-full" src="{{ $media['image'] }}">
                                     @endif
                                 </div>
                                 <div class="flex flex-col">

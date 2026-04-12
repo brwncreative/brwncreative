@@ -11,6 +11,12 @@ new class extends Component
     {
         return DB::table('projects')->where('type', '=', 'digital')->inRandomOrder()->first();
     }
+
+    #[Computed]
+    public function projects()
+    {
+        return DB::table('projects')->where('type', '=', 'digital')->inRandomOrder()->limit(6)->get();
+    }
 };
 ?>
 
@@ -34,12 +40,11 @@ new class extends Component
     <section id="services" class="flex items-center justify-center my-12 appear px-5 opacity-0"
         style="animation-delay: 200ms" x-data="{
        offerings:[
-        ['e-commerce','bi bi-cart-fill', 'text-[#52a341]'],
-        ['blog','bi bi-bookmark-heart-fill','text-[#a073ef]'],
-        ['e-catalog','bi bi-send-fill','text-[#39bbcc]'],
-        ['mobile apps','bi bi-phone-fill','text-[#e378cf]'],
-        ['desktop apps','bi bi-laptop-fill','text-[#de7c59]'],
-        ['single page apps','bi bi-dice-1-fill','text-[#f2df5e]']
+        ['logos','bi bi-cart-fill', 'text-[#52a341]'],
+        ['flyers','bi bi-bookmark-heart-fill','text-[#a073ef]'],
+        ['animation','bi bi-send-fill','text-[#39bbcc]'],
+        ['video editing','bi bi-phone-fill','text-[#e378cf]'],
+        ['3D','bi bi-laptop-fill','text-[#de7c59]'],
     ],
     highlighting: 0,
     init(){
@@ -53,10 +58,10 @@ new class extends Component
     }
     }">
         <div class="flex items-center gap-2 justify-center flex-wrap">
-            <template x-for="(offer, offer_index) in offerings" :key="`digital-${offer_index}`">
-                <div class="p-2 bg-gray-100 rounded-4xl"  :class="highlighting == offer_index ? `roomy` : null">
+            <template x-for="(offer, offer_index) in offerings" :key="`digital-${offer_index}-${new Date()}`">
+                <div class="p-2 bg-gray-100 rounded-4xl" :class="highlighting == offer_index ? `roomy` : null">
                     <div
-                        class="select-none flex items-center gap-3 p-1 px-5 pl-3 bg-white shadow-md rounded-4xl cursor-pointer" >
+                        class="select-none flex items-center gap-3 p-1 px-5 pl-3 bg-white shadow-md rounded-4xl cursor-pointer">
                         <i :class="`${offer[1]} ${offer[2]}`" class="text-sm"></i>
                         <p x-text="offer[0]" class="capitalize text-lg"></p>
                     </div>
@@ -65,7 +70,7 @@ new class extends Component
         </div>
     </section>
     {{-- Featured --}}
-    <section id="featured" class="flex items-center justify-center appear opacity-0" style="animation-delay: 100ms">
+    <section id="featured" class="flex items-center justify-center appear opacity-0 mb-10" style="animation-delay: 100ms">
         <div class="w-full bg-gray-100 p-3 px-5 box-border">
             <div
                 class="bg-white w-full p-5 h-full shadow-md shadow-black/30 border border-l-3 border-l-gray-500 border-gray-300 rounded-l-[0px] rounded grid grid-cols-[max-content_1fr] gap-5">
@@ -88,4 +93,43 @@ new class extends Component
             </div>
         </div>
     </section>
+    {{-- Portfolio --}}
+    <div class="px-5 min-[1200px]:px-10 appear opacity-0 mb-10" style="animation-delay: 400ms">
+        <hgroup>
+            <h2 class="text-4xl robofont">Previous Work</h2>
+            <p class="text-lg max-w-[250px]">
+                Check out what i've done!
+            </p>
+        </hgroup>
+        <hr class="mt-4 border-[#2c2c2c]">
+        {{-- List --}}
+        <div class="flex flex-wrap gap-[1.3%] max-sm:gap-[1%]" x-data="{
+        projects: {{ $this->projects }}
+        }">
+            <template x-for="(project, project_index) in projects" :key="project_index">
+                <div class="w-[32%] max-sm:w-[49%] mt-5 hover:opacity-80 cursor-pointer"
+                    x-on:click="$dispatch('see-project',{id: project.id})">
+                    <div class="img bg-gray-100 h-[200px] relative overflow-hidden flex items-center justify-center rounded">
+                        <template x-if="Object.keys(JSON.parse(project.media)).length > 0">
+                            <img loading="lazy" class="h-full min-w-max" :src="`${Object.values(JSON.parse(project.media)).find(media => media.purpose == 'cover').image}`"
+                                alt="">
+                        </template>
+                        {{-- <div class="w-full h-[50px] absolute bottom-0 left-0 bg-gradient-to-t from-black/50 to-white/0"></div> --}}
+                    </div>
+                    <hgroup class="mt-3">
+                        <p x-text="project.name" class="text-[1.2rem] font-bold"></p>
+                        <div class="tags my-2 flex gap-1 line-clamp-1">
+                            <template x-for="(tag, tag_index) in JSON.parse(project.tags)">
+                                <p x-text="tag"
+                                    class="py-1 capitalize px-3 line-clamp-1 text-ellipsis bg-gray-200 rounded-4xl">
+                                </p>
+                            </template>
+                        </div>
+                    </hgroup>
+                </div>
+            </template>
+        </div>
+    </div>
+    {{-- See Project --}}
+    <livewire:display.project :key="'display.project'.time()" defer />
 </main>

@@ -77,14 +77,14 @@
         from {
             margin-inline: 0px;
         }
-        10% {
-            margin-inline: 5px;
-        }
-        30% {
-            margin-inline: 2px;
-        }
-        50% {
+        20% {
             margin-inline: 8px;
+        }
+        80% {
+            margin-inline: 8px;
+        }
+        100% {
+            margin-inline: 0px;
         }
     }
 }
