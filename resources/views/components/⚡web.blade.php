@@ -129,12 +129,15 @@ new class extends Component
             <template x-for="(project, project_index) in projects" :key="project_index">
                 <div class="w-[32%] max-sm:w-[49%] mt-5 hover:opacity-80 cursor-pointer"
                     x-on:click="$dispatch('see-project',{id: project.id})">
-                    <div class="img bg-accent h-[200px] relative overflow-hidden flex items-center justify-center rounded">
+                    <div
+                        class="img bg-accent h-[200px] relative overflow-hidden flex items-center justify-center rounded">
                         <template x-if="Object.keys(JSON.parse(project.media)).length > 0">
-                            <img loading="lazy" class="h-full min-w-max" :src="`${Object.values(JSON.parse(project.media)).find(media => media.purpose == 'cover').image}`"
+                            <img loading="lazy" class="w-full min-h-max"
+                                :src="`${Object.values(JSON.parse(project.media)).find(media => media.purpose == 'cover').image}`"
                                 alt="">
                         </template>
-                        <div class="w-full h-[50px] absolute bottom-0 left-0 bg-gradient-to-t from-black/50 to-white/0"></div>
+                        <div class="w-full h-[50px] absolute bottom-0 left-0 bg-gradient-to-t from-black/50 to-white/0">
+                        </div>
                     </div>
                     <hgroup class="mt-3">
                         <p x-text="project.name" class="text-[1.2rem] font-bold"></p>
@@ -157,7 +160,7 @@ new class extends Component
     current: 'easy',
     }">
         <hgroup>
-            <h2 class="text-4xl robofont">Packages</h2>
+            <h2 class="text-4xl robofont">Packages <strong class="text-2xl">(USD)</strong></h2>
             <p class="text-lg max-w-[250px]">
                 Here's a breakdown of what we offer
             </p>
@@ -202,11 +205,12 @@ new class extends Component
                     </ul>
                     <hgroup class="leading-8 w-full px-5">
                         <p>Starting from</p>
-                        <p class="text-6xl gfont">$1,500</p>
+                        <p class="text-6xl robofont">$445</p>
                         <p class="text-gray-700 leading-5 text-sm mt-2">Domain free for one year. Maintenance costs do
                             apply after site is finished</p>
                     </hgroup>
-                    <a href="https://wa.me/18687687915?text=Can you tell me about the E-Commerce package?" class="my-3 w-[90%] flex items-center justify-center gap-3 rounded-2xl text-white py-3 shadow-lg bg-black">Get
+                    <a href="https://wa.me/18687687915?text=Can you tell me about the E-Commerce package?"
+                        class="my-3 w-[90%] flex items-center justify-center gap-3 rounded-2xl text-white py-3 shadow-lg bg-black">Get
                         Started <i class=" bi bi-arrow-up-right"></i></a>
                 </li>
                 {{-- Easy Start --}}
@@ -230,11 +234,12 @@ new class extends Component
                     </ul>
                     <hgroup class="leading-8 w-full px-5">
                         <p>Starting from</p>
-                        <p class="text-6xl gfont">$999</p>
+                        <p class="text-6xl robofont">$150</p>
                         <p class="text-gray-700 leading-5 text-sm mt-2">Domain free for one year. Maintenance costs do
                             apply after site is finished</p>
                     </hgroup>
-                   <a href="https://wa.me/18687687915?text=Can you tell me about the Easy Start package?" class="my-3 w-[90%] flex items-center justify-center gap-3 rounded-2xl text-white py-3 shadow-lg bg-black">Get
+                    <a href="https://wa.me/18687687915?text=Can you tell me about the Easy Start package?"
+                        class="my-3 w-[90%] flex items-center justify-center gap-3 rounded-2xl text-white py-3 shadow-lg bg-black">Get
                         Started <i class=" bi bi-arrow-up-right"></i></a>
                 </li>
                 {{-- Web Brwn --}}
@@ -265,11 +270,12 @@ new class extends Component
                     </ul>
                     <hgroup class="leading-8 w-full px-5">
                         <p>Starting from</p>
-                        <p class="text-6xl gfont">$2,500</p>
+                        <p class="text-6xl robofont">$750</p>
                         <p class="text-gray-700 leading-5 text-sm mt-2">Domain free for one year. Maintenance costs do
                             apply after site is finished</p>
                     </hgroup>
-                    <a href="https://wa.me/18687687915?text=Can you tell me about the Web Brwn package?" class="my-3 w-[90%] flex items-center justify-center gap-3 rounded-2xl text-white py-3 shadow-lg bg-black">Get
+                    <a href="https://wa.me/18687687915?text=Can you tell me about the Web Brwn package?"
+                        class="my-3 w-[90%] flex items-center justify-center gap-3 rounded-2xl text-white py-3 shadow-lg bg-black">Get
                         Started <i class=" bi bi-arrow-up-right"></i></a>
                 </li>
             </ul>

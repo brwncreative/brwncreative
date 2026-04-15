@@ -20,7 +20,7 @@ class Upload extends Controller
                 mkdir(public_path("/projects/{$project->id}"), recursive: true);
             }
             $gd = @imagecreatefromstring($image->get());
-            $w = imagesx($gd) * .8;
+            $w = imagesx($gd) * .90;
             $gd = imagescale($gd, $w);
             @imagewebp($gd, public_path("/projects/{$project->id}/{$rand}.webp"), 95);
         }

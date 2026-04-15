@@ -36,8 +36,10 @@ $wire.clearProject()
 }" x-show="visible" x-cloak x-on:see-project.window="see($event.detail.id)"
     :class="visible ? `pointer-events-all` : `pointer-events-all`"
     class="fixed justify-center top-0 left-0 flex w-full h-full bg-black/50 z-5">
+
+    {{-- Close --}}
     <i x-on:click="close"
-        class="bi bi-x z-20 flex items-center justify-center w-[30px] h-[30px] cursor-pointer hover:opacity-50 bg-white/20 text-white max-lg:bg-black/50 absolute right-5 top-5"></i>
+        class="bi bi-x z-20 text-xl flex items-center justify-center w-[30px] h-[30px] cursor-pointer hover:opacity-50 bg-white/20 text-white max-lg:bg-black/50 absolute right-5 top-5"></i>
     <div class="w-[70%] max-lg:w-[100%] relative bg-white text-black overflow-y-auto">
 
         {{-- Media --}}
@@ -46,13 +48,12 @@ $wire.clearProject()
                 <img :src="media.image" :alt="`${project.name}-image-${media.image}`">
             </template>
         </template>
-        <hr class="border border-brwn border-2">
         {{-- Breakdown --}}
         <template x-if="project">
             <hgroup class="p-5 flex flex-col gap-4">
-                <h1 class="text-3xl font-medium" x-text="project.name">
+                <h1 class="text-5xl font-medium capitalize" x-text="project.name">
                 </h1>
-                <div class="problem flex flex-col gap-[1px] p-3 px-4 shadow-md border border-gray-300">
+                <div class="problem flex flex-col gap-[1px] p-3 px-4 border border-l-2 border-gray-300">
                     <p class="font-medium text-[1.2rem]">Prompt</p>
                     <p x-text="project.problem"></p>
                 </div>
@@ -66,8 +67,8 @@ $wire.clearProject()
                         src="https://drive.google.com/thumbnail?id=1tq5Vjp4KCWUZdu1uCxCwdiMEyf8Gf-Hd&sz=h200"
                         alt="brwn_logo_email">
                     <a :href="`https://wa.me/18687687915?text=I liked the ${project.name} project, can you tell me some more about it?`"
-                        class="w-full rounded-lg border border-brwn text-brwn py-3 px-3 mt-4 text-[1.3rem] shadow-md flex items-center justify-center">I like
-                        this</a>
+                        class="w-full rounded-lg border bg-gray-200 mt-10 text-gray-800 py-3 px-3 flex gap-3 text-[1.3rem] flex items-center justify-center">I like
+                        this <i class="bi bi-arrow-up-right"></i></a>
                 </div>
             </hgroup>
         </template>

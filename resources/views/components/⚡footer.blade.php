@@ -33,21 +33,22 @@ inputs: $wire.entangle('contact_package')
 ">
     {{-- Sticker --}}
     <div class="flex h-[0px] relative items-center justify-center">
-        <img class="h-[60px] absolute top-[-30px]" loading="lazy" src="{{ asset('brwncreative_w_offset.svg') }}"
+        <img class="h-[50px] absolute top-[-25px]" loading="lazy" src="{{ asset('brwncreative_w_offset.svg') }}"
             alt="brwncreative logo">
     </div>
     {{-- About Me --}}
-    <div id="about-me"
-        class="bg-gray-100 px-5 py-4 max-lg:pt-15 flex gap-15 min-h-[250px] flex items-center max-lg:flex-col max-lg:gap-5">
+    <section id="about-me"
+        class="px-5 py-5 pt-7 pb-10 max-lg:pt-15 flex gap-15 min-h-[250px] flex items-center max-lg:flex-col max-lg:gap-5">
         <div
-            class="img rounded-lg shadow-md relative h-[200px] max-lg:h-[100px] w-[25%] max-lg:w-[35%] overflow-hidden flex items-center justify-center">
+            class="img relative h-[200px] rounded max-lg:h-[150px] w-[25%] max-lg:w-[35%] overflow-hidden flex items-center justify-center">
             <img class="absolute top-[-25px] max-lg:top-0 max-w-full"
-                src="{{ asset('kareem_williams_brwncreative.webp') }}" alt="">
+                src="{{ asset('kareem_williams_brwncreative.webp') }}" alt="kareem-williams-brwncreative">
         </div>
         <div>
             <hgroup>
-                <h2 class="text-2xl font-medium">About Me</h2>
-                <p class="text-[1.2rem] max-lg:text-[1rem] max-w-[800px]">Hi there, my name is Kareem 'Brwncreative'
+                <h2 class="text-5xl tracking-tight  font-medium max-lg:text-center">About Me</h2>
+                <p class="text-[1.2rem] max-lg:text-[1rem] max-w-[800px] mt-4">Hi there, my name is Kareem
+                    'Brwncreative'
                     Williams, and I continue to cultivate my skillsets in digital media and software development, off
                     the heels of receiving my tertiary education. As an art kid, turned curious nerdy teen and now
                     realized adult, I marry my creative indulgence with the technicality, and potential, of the software
@@ -55,57 +56,24 @@ inputs: $wire.entangle('contact_package')
                     any and all of my end users/ consumers. </p>
             </hgroup>
             <button x-on:click="$wire.resume()"
-                class="flex w-[450px] max-sm:w-[100%] mt-5 items-center justify-center gap-4 px-5 py-2 bg-brwn text-white rounded-4xl border-b shadow-md shadow-[#643e34]/80 border-[#643e34] text-[1.1rem]">
+                class="flex w-[450px] max-lg:w-full cursor-pointer active:opacity-50 mt-5 items-center justify-center gap-4 px-5 py-2 bg-brwn text-white rounded-4xl text-[1.1rem]">
                 <i class="bi bi-box-arrow-down"></i> Download Resume
             </button>
         </div>
-    </div>
-    {{-- Trusted By Section --}}
-    <section id="trusted-by" class="my-15 flex items-center justify-center flex-col gap-3">
-        <hgroup class="text-center">
-            <h1 class="text-4xl font-medium">Trusted By</h1>
-            <p class="text-[1.2rem]">Innovators and market leaders like</p>
-        </hgroup>
-        <div class="trust-list w-[100%] relative flex items-center justify-center" x-data="{
-            logos: ['bmelectronics','hyatt','pbs','vgor']
-            }">
-            <ul class="flex flex-wrap gap-15 items-center justify-center h-full">
-                <template x-for="(logo , logo_index) in logos" :key='logo_index+`-{{ rand(0,1000) }}`'>
-                    <li class=" h-[80px] w-[80px] p-3 box-border">
-                        <div class="h-full w-full flex items-center justify-center bg-white  shadow-black/30">
-                            <img loading="lazy" :src="`trusted/${logo}.webp`" :alt="`${logo}-logo`"
-                                class="max-h-full max-w-full">
-                        </div>
-                    </li>
-                </template>
-            </ul>
-        </div>
     </section>
     {{-- Contact Me --}}
-    {{-- <section id="contact-me" class="flex items-center justify-center flex-col gap-3 pb-10 px-5 box-border">
-        <div class="rounded-2xl w-[450px] max-sm:w-[100%] p-3 box-border">
-            <hgroup class="mb-4">
-                <h2 class="text-2xl font-medium">Contact Me</h2>
-                <div class="contacts mt-2 flex flex-wrap gap-1">
-                    <a class="text-[1rem] truncate p-2 border border-gray-400 bg-gray-100 px-4 rounded-4xl py-1"
-                        href="mailto:kareem.williams@brwncreative.com">kareem.williams@brwncreative.com</a>
-                    <p class="text-[1rem] line-clamp-1 p-2 border border-gray-400 bg-gray-100 px-4 rounded-4xl py-1">
-                        1(868)768-7915
-                    </p>
-                </div>
-            </hgroup>
-            <div class="inputs flex flex-col gap-3">
-                <input x-model="inputs.name" size="1" type="text" placeholder="Name"
-                    class="border text-[1.1rem] border-gray-400 rounded-xl px-4 py-2">
-                <textarea x-model="inputs.message" size="1" type="text" placeholder="Message"
-                    class="border border-gray-400 rounded-lg px-4 py-2 text-[1.1rem]"></textarea>
-            </div>
-            <div class="actions flex gap-4 box-border bg-gray-100 rounded-4xl mt-4 p-3 border border-gray-400">
-                <a :href="`https://wa.me/18687687915?text= Hi my name is ${inputs.name}; ${inputs.message}`"
-                    class="py-2 truncate px-3 w-full border border-gray-400 shadow-md shadow-black/30 rounded-4xl flex items-center justify-center text-[1.1rem] gap-3"><i
-                        class="bi bi-whatsapp"></i> WhatsApp</a>
-            </div>
-        </div>
-    </section> --}}
-
+    <section id="contact-me" class="flex flex-wrap">
+        <a  href="mailto:kareem.williams@brwncreative.com" class="py-3 border hover:bg-gray-200 w-[50%] flex items-center justify-center gap-4 bg-gray-100 text-[1.5rem]">
+            Mail <i class="bi bi-arrow-up-right"></i>
+        </a>
+        <a href="https://wa.me/18687687915?text=I would like to work with you" class="py-3 border hover:bg-gray-200 w-[50%] flex items-center justify-center gap-4 bg-gray-100 text-[1.5rem]">
+            Whatsapp <i class="bi bi-arrow-up-right"></i>
+        </a>
+        <a href="https://www.instagram.com/brwncreativestudio/?hl=en" class="py-3 border hover:bg-gray-200 w-[50%] flex items-center justify-center gap-4 bg-gray-100 text-[1.5rem]">
+            Instagram <i class="bi bi-arrow-up-right"></i>
+        </a>
+        <a href="https://www.facebook.com/brwncreativestudio/" class="py-3 border hover:bg-gray-200 w-[50%] flex items-center justify-center gap-4 bg-gray-100 text-[1.5rem]">
+           Facebook <i class="bi bi-arrow-up-right"></i>
+        </a>
+    </section>
 </footer>

@@ -21,12 +21,12 @@ new class extends Component
 ?>
 
 <main id="digital-page" x-data="{
-    featured: {{ json_encode($this->featured) }}
+    featured: {{ json_encode($this->featured) }},
 }">
     {{-- Introduction --}}
-    <section class="appear px-10" id="introduction">
-        <hgroup class="text-center flex flex-col gap-4 items-center justify-center">
-            <h1 class="text-7xl max-w-[500px] robofont">
+    <section class="appear px-10 overflow-hidden" id="introduction">
+        <hgroup class="text-center relative flex flex-col gap-4 items-center justify-center">
+            <h1 class="text-7xl max-sm:text-6xl max-sm:max-w-[700px] max-w-[500px] robofont">
                 I put the Digital in <span class="font-medium">Digital Media</span>
             </h1>
             <p class="max-w-[500px] text-[1.2rem]">
@@ -40,11 +40,11 @@ new class extends Component
     <section id="services" class="flex items-center justify-center my-12 appear px-5 opacity-0"
         style="animation-delay: 200ms" x-data="{
        offerings:[
-        ['logos','bi bi-cart-fill', 'text-[#52a341]'],
-        ['flyers','bi bi-bookmark-heart-fill','text-[#a073ef]'],
-        ['animation','bi bi-send-fill','text-[#39bbcc]'],
-        ['video editing','bi bi-phone-fill','text-[#e378cf]'],
-        ['3D','bi bi-laptop-fill','text-[#de7c59]'],
+        ['logos','bi bi-pencil-square', 'text-[#E08115]'],
+        ['flyers','bi bi-newspaper','text-[#14073B]'],
+        ['animation','bi bi-film','text-[#053F04]'],
+        ['video editing','bi bi-camera-reels-fill','text-[#5C390A]'],
+        ['3D','bi bi-box','text-[#0F75BD]'],
     ],
     highlighting: 0,
     init(){
@@ -69,8 +69,36 @@ new class extends Component
             </template>
         </div>
     </section>
+    {{-- Trusted By Section --}}
+    <section id="trusted-by" class="px-5 flex items-center justify-center mb-10" x-data="{
+            logos: ['bmelectronics','hyatt','pbs','vgor']
+            }">
+        <div class=" w-[80%] flex justify-around overflow-hidden">
+            <div class="w-max flex gap-[1rem] pr-[1rem] justify-around  scroll">
+                <template x-for="(logo , logo_index) in logos" :key='logo_index+`-{{ rand(0,1000) }}`'>
+                    <div class="card h-[5em] max-sm:min-w-[150px] min-w-[250px]">
+                        <div class="h-full w-full flex items-center justify-center  shadow-black/30">
+                            <img loading="lazy" :src="`trusted/${logo}.webp`" :alt="`${logo}-logo`"
+                                class="max-h-[80%] max-w-full">
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div aria-hidden class="w-max flex gap-[1rem] pr-[1rem] justify-around  scroll">
+                <template x-for="(logo , logo_index) in logos" :key='logo_index+`-{{ rand(0,1000) }}`'>
+                    <div class="card h-[5em] max-sm:min-w-[150px] min-w-[250px]">
+                        <div class="h-full w-full flex items-center justify-center  shadow-black/30">
+                            <img loading="lazy" :src="`trusted/${logo}.webp`" :alt="`${logo}-logo`"
+                                class="max-h-[80%] max-w-full">
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
     {{-- Featured --}}
-    <section id="featured" class="flex items-center justify-center appear opacity-0 mb-10" style="animation-delay: 100ms">
+    <section id="featured" class="flex items-center justify-center appear opacity-0 mb-10"
+        style="animation-delay: 100ms">
         <div class="w-full bg-gray-100 p-3 px-5 box-border">
             <div
                 class="bg-white w-full p-5 h-full shadow-md shadow-black/30 border border-l-3 border-l-gray-500 border-gray-300 rounded-l-[0px] rounded grid grid-cols-[max-content_1fr] gap-5">
@@ -94,27 +122,27 @@ new class extends Component
         </div>
     </section>
     {{-- Portfolio --}}
-    <div class="px-5 min-[1200px]:px-10 appear opacity-0 mb-10" style="animation-delay: 400ms">
+    <div class="px-5 min-[1200px]:px-10 appear opacity-0 mb-10" style="animation-delay: 200ms">
         <hgroup>
-            <h2 class="text-4xl robofont">Previous Work</h2>
+            <img class="h-[35px]" src="{{ asset('previous_work.svg') }}" alt="Previous Work">
             <p class="text-lg max-w-[250px]">
                 Check out what i've done!
             </p>
         </hgroup>
-        <hr class="mt-4 border-[#2c2c2c]">
         {{-- List --}}
-        <div class="flex flex-wrap gap-[1.3%] max-sm:gap-[1%]" x-data="{
+        <div class="flex flex-wrap gap-[1.3%] max-sm:gap-[1%] mt-3" x-data="{
         projects: {{ $this->projects }}
         }">
             <template x-for="(project, project_index) in projects" :key="project_index">
                 <div class="w-[32%] max-sm:w-[49%] mt-5 hover:opacity-80 cursor-pointer"
                     x-on:click="$dispatch('see-project',{id: project.id})">
-                    <div class="img bg-gray-100 h-[200px] relative overflow-hidden flex items-center justify-center rounded">
+                    <div
+                        class="img bg-gray-100 h-[200px] relative overflow-hidden flex items-center justify-center rounded">
                         <template x-if="Object.keys(JSON.parse(project.media)).length > 0">
-                            <img loading="lazy" class="h-full min-w-max" :src="`${Object.values(JSON.parse(project.media)).find(media => media.purpose == 'cover').image}`"
+                            <img loading="lazy" class="w-full min-h-max"
+                                :src="`${Object.values(JSON.parse(project.media)).find(media => media.purpose == 'cover').image}`"
                                 alt="">
                         </template>
-                        {{-- <div class="w-full h-[50px] absolute bottom-0 left-0 bg-gradient-to-t from-black/50 to-white/0"></div> --}}
                     </div>
                     <hgroup class="mt-3">
                         <p x-text="project.name" class="text-[1.2rem] font-bold"></p>
@@ -128,6 +156,43 @@ new class extends Component
                     </hgroup>
                 </div>
             </template>
+        </div>
+    </div>
+    {{-- Pricing --}}
+    <div class="px-5 min-[1200px]:px-10 appear opacity-0 mb-25" style="animation-delay: 600ms">
+        <hgroup>
+            <img class="h-[45px]" src="{{ asset('pricing.svg') }}" alt="Previous Work"> <strong
+                class="text-2xl">(USD)</strong>
+            <p class="text-lg max-w-[250px]">
+                Competitive pricing for all budgets
+            </p>
+        </hgroup>
+        {{-- Price Blocks --}}
+        <div class="mt-5 pb-5 h-max overflow-x-auto flex items-center justify-center">
+            <div class="flex flex-col h-[400px] flex-wrap w-max" x-data="{
+        pricing: [
+        {category: 'logos',price:'36','note':null},
+        {category: 'flyers', price:'52','note':'Get an animted version for +$250.00'},
+        {category: 'video editing', price:'30', note :'/15 seconds'},
+        {category: 'animated flyer', price:'52', note :null},
+        {category: 'branding package', price:'221', note :null},
+        {category: 'social media', price:'89', note :'/month. The starting amount gives you 6 static posts and 1 reel'}
+        ]
+        }">
+                <template x-for="(price, price_index) in pricing" :key="price_index">
+                    <div
+                        class="h-[50%] w-[200px] min-w-[200px] hover:bg-gray-50 border border-gray-300 box-border p-5 py-4">
+                        <hgroup>
+                            <h2 class="text-3xl capitalize wrap-break-word" x-text="price.category"></h2>
+                            <hr class="my-2">
+                            <p>Starting from:</p>
+                            <p class="font-medium text-3xl mt-4 robotext" x-text="`$${Number(price.price).toFixed(2)}`">
+                            </p>
+                            <p class="text-gray-600 text-[1.05rem]" x-text="price.note"></p>
+                        </hgroup>
+                    </div>
+                </template>
+            </div>
         </div>
     </div>
     {{-- See Project --}}

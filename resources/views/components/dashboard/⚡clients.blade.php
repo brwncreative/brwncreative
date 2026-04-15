@@ -29,7 +29,7 @@ new class extends Component
     {
         DB::table('clients')->delete($id);
         if ($id == $this->client['id']) {
-            self::freshClient();
+            self::fresh();
         }
         self::getClients();
     }
@@ -60,10 +60,10 @@ new class extends Component
 
         if ($client->id) {
             self::getClients();
-            self::freshClient();
+            self::fresh();
         }
     }
-    public function freshClient()
+    public function fresh()
     {
         $this->client = ['id' => null, 'name' => null, 'description' => null, 'address' => null, 'balance' => null, 'email' => null, 'phone' => '1868'];
     }
@@ -121,7 +121,7 @@ new class extends Component
         <div class="form px-5">
             {{-- Greeting --}}
             <hgroup>
-                <h1 class="text-3xl flex items-center gap-3">Client Management
+                <h1 class="text-3xl font-medium flex items-center gap-3">Client Management
                     <div wire:loading role="status">
                         <svg aria-hidden="true" class="w-8 h-8 text-neutral-tertiary animate-spin fill-brand"
                             viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,6 +134,8 @@ new class extends Component
                         </svg>
                         <span class="sr-only">Loading...</span>
                     </div>
+                    <button x-on:click="$wire.fresh()"
+                        class="bg-gray-100 font-normal border cursor-pointer active:opacity-50 border-gray-300 text-xl p-3 py-1">Clear</button>
                 </h1>
                 <p class="text-[1.1rem] text-gray-500">Manage your clients from this area</p>
             </hgroup>

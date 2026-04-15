@@ -132,12 +132,12 @@ init(){
     </hgroup>
     {{-- Mailing List --}}
     <div class="mailing-list-management mt-2">
-        <button class="border flex gap-5 items-center border-brwn shadow-md px-3 pr-1 py-1 rounded text-[1.2rem]">
+        <button class="border flex gap-5 items-center border-black shadow-md px-3 pr-1 py-1 rounded text-[1.2rem]">
             <p>Mailing List</p>
             <div class="actions flex items-center gap-1">
                 <i x-on:click="checklist = !checklist"
-                    class="bi bi-chevron-down cursor-pointer active:scale-95 flex w-[20px] h-[20px] text-sm bg-brwn text-white rounded shadow-lg items-center justify-center"></i>
-                <p x-on:click="letter.recipients = letter.recipients.concat(mailinglist)" class=" bg-brwn cursor-pointer active:scale-95 text-sm px-3 py-1 text-white rounded shadow-lg items-center justify-center">Send All</p>
+                    class="bi bi-chevron-down cursor-pointer active:scale-95 flex w-[20px] h-[20px] text-sm bg-black text-white rounded shadow-lg items-center justify-center"></i>
+                <p x-on:click="letter.recipients = letter.recipients.concat(mailinglist)" class=" bg-black cursor-pointer active:scale-95 text-sm px-3 py-1 text-white rounded shadow-lg items-center justify-center">Send All</p>
             </div>
         </button>
         {{-- List --}}

@@ -198,6 +198,7 @@ this.work.tags.splice(key,1);
                         </svg>
                         <span class="sr-only">Loading...</span>
                     </div>
+                    <button x-on:click="$wire.fresh()" class="bg-gray-100 cursor-pointer active:opacity-50 font-normal border border-gray-300 text-xl p-3 py-1">Clear</button>
                 </h1>
                 <p class="text-gray-500 text-[1rem]">Enter your portfolio projects here</p>
             </hgroup>
