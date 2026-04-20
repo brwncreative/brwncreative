@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('turnaround')->nullable()->index();
             $table->longText('explanation');
             $table->string('problem');
+            $table->string('cover')->nullable();
             $table->json('media')->nullable();
             $table->timestamps();
         });

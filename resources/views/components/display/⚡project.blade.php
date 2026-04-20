@@ -38,37 +38,46 @@ $wire.clearProject()
     class="fixed justify-center top-0 left-0 flex w-full h-full bg-black/50 z-5">
 
     {{-- Close --}}
-    <i x-on:click="close"
-        class="bi bi-x z-20 text-xl flex items-center justify-center w-[30px] h-[30px] cursor-pointer hover:opacity-50 bg-white/20 text-white max-lg:bg-black/50 absolute right-5 top-5"></i>
+    <div class="actions z-20 flex items-center gap-1 absolute right-5 top-5">
+        <template x-if="project">
+            <a :href="`https://wa.me/18687687915?text=I liked the ${project.name} project, can you tell me some more about it?`"
+                class="w-full border bg-gray-200 text-gray-800 h-[30px] px-3 flex gap-3 flex items-center justify-center">
+                Tell Me More
+                <i class="bi bi-arrow-up-right"></i></a>
+        </template>
+        <i x-on:click="close"
+            class="bi bi-x text-xl flex items-center justify-center min-w-[30px] min-h-[30px] cursor-pointer hover:opacity-50 bg-white/20 text-white shadow-md max-lg:bg-black/50 "></i>
+    </div>
+
     <div class="w-[70%] max-lg:w-[100%] relative bg-white text-black overflow-y-auto">
 
         {{-- Media --}}
         <template x-if="project">
             <template x-for="(media,media_index) in JSON.parse(project.media)" :key="media_index + new Date()">
-                <img :src="media.image" :alt="`${project.name}-image-${media.image}`">
+                <img loading="lazy" class="w-full" :src="media" :alt="`${project.name}-image-${media}`">
             </template>
         </template>
         {{-- Breakdown --}}
         <template x-if="project">
-            <hgroup class="p-5 flex flex-col gap-4">
-                <h1 class="text-5xl font-medium capitalize" x-text="project.name">
-                </h1>
-                <div class="problem flex flex-col gap-[1px] p-3 px-4 border border-l-2 border-gray-300">
-                    <p class="font-medium text-[1.2rem]">Prompt</p>
+            <hgroup class="p-5 pt-10 pb-15 flex flex-col gap-4">
+                <div class="flex flex-col items-center justify-center">
+                    <p class="text-4xl text-brwn font-medium">Project:</p>
+                    <h1 class="text-3xl font-medium capitalize mb-2" x-text="project.name">
+                    </h1>
+                    <div class="flex flex-wrap justify-center gap-1 max-w-[800px]">
+                        <template x-for="(tag, tag_index) in JSON.parse(project.tags)" :key="tag_index">
+                            <div class="py-1 px-4 rounded-4xl bg-gray-100 border border-gray-500 capitalize"
+                                x-text="tag"></div>
+                        </template>
+                    </div>
+                </div>
+                <div class="process flex flex-col gap-[1px]">
+                    <h1 class="font-medium text-[1.3rem]">Problem</h1>
                     <p x-text="project.problem"></p>
                 </div>
                 <div class="process flex flex-col gap-[1px]">
-                    <p class="font-medium text-[1.2rem]">Process</p>
+                    <h1 class="font-medium text-[1.3rem]">Process and Solution</h1>
                     <p x-text="project.explanation"></p>
-                </div>
-                <hr>
-                <div class="actions flex flex-col justify-center items-center">
-                    <img style="width: 180px;"
-                        src="https://drive.google.com/thumbnail?id=1tq5Vjp4KCWUZdu1uCxCwdiMEyf8Gf-Hd&sz=h200"
-                        alt="brwn_logo_email">
-                    <a :href="`https://wa.me/18687687915?text=I liked the ${project.name} project, can you tell me some more about it?`"
-                        class="w-full rounded-lg border bg-gray-200 mt-10 text-gray-800 py-3 px-3 flex gap-3 text-[1.3rem] flex items-center justify-center">I like
-                        this <i class="bi bi-arrow-up-right"></i></a>
                 </div>
             </hgroup>
         </template>

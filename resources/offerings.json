@@ -1,0 +1,24 @@
+{
+    "website development": {
+        "title": "website development",
+        "description": "Take the next step in your entrepreneurship journey; Get a website that screams my business is here with all the functionality necessary to give your customers and experience they'll never forget",
+        "pricing": "Starting as low as $999.00 TTD",
+        "disclaimer": "Websites carry a monthly maintenance and yearly domain fee of $100.00 TTD, your first month and year are free!"
+    },
+    "logos": {
+        "title": "logos",
+        "description": "Its competitive out there, you need a symbol that sets you apart and and can reliably be used everywhere. Get yourself a logo today",
+        "pricing": "Starting from $350 TTD"
+    },
+    "flyers": {
+        "title": "flyers",
+        "description": "Need the people who need to know, know? Get a flyer that gives the details of your operation while still looking engaging.",
+        "pricing": "Starting from $350.00 TTD"
+    },
+    "social media":{
+        "title":"Social Media",
+        "description":"Do you have a business vision that you can't quite get down? Let's work together on creating a consistent, engaging and unique online presence so you can feel confident saying, 'This is my business and this is what we provide'",
+        "pricing":"Starts from $1200TD / m",
+        "disclaimer":"The starting package includes 5 static posts and 1 reel!"
+    }
+}

@@ -56,12 +56,11 @@
     @livewireStyles
 </head>
 
-<body class="gfont">
+<body class="gfont min-h-screen">
     {{-- Main Content --}}
     {{ $slot }}
 
-    {{-- Footer --}}
-    <livewire:footer defer />
+    <livewire:footer />
     @livewireScripts
 </body>
 

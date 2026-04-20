@@ -13,6 +13,7 @@ new class extends Component
 
     public $projects, $project = [
         'id' => null,
+        'cover' => null,
         'type' => 'web',
         'name' => null,
         'tags' => [],
@@ -21,7 +22,8 @@ new class extends Component
         'problem' => null,
         'media' => []
     ], $media = [];
-    public function deleteImage($how = null, $key = null, $url = null)
+
+    public function deleteImage($how = null, $key = null, $url = null, $list = null)
     {
         switch ($how) {
             case 'local':
@@ -29,20 +31,8 @@ new class extends Component
                 $this->media = array_values($this->media);
                 break;
             case 'server':
-                unset($this->project['media'][$key]);
-                $old = json_decode(DB::table('projects')->find($this->project['id'], ['media'])->media, true);
-                $lookup = function ($needle, $array) {
-                    foreach ($array as $index => $val) {
-                        if ($val['image'] == $needle) {
-                            return $index;
-                        }
-                    }
-                    return false;
-                };
-                $found = $lookup($url, $old);
-                unset($old[$found]);
-                Project::where('id', '=', $this->project['id'])->update(['media' => $old]);
                 Remove::file($url);
+                Project::where('id', '=', $this->project['id'])->update(['media' => json_encode(array_values($this->project['media']), JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES)]);
                 self::getProjects();
                 break;
         }
@@ -57,10 +47,11 @@ new class extends Component
                 }
                 break;
             case 'cover':
-                foreach ($this->project['media'] as $index => $media) {
-                    $this->project['media'][$index]['purpose'] = 'general';
+                if (gettype($this->project['media'][$key]) == 'object') {
+                    $this->project['cover'] = $key;
+                } else {
+                    $this->project['cover'] = $this->project['media'][$key];
                 }
-                $this->project['media'][$key]['purpose'] = 'cover';
                 break;
         }
     }
@@ -94,12 +85,16 @@ new class extends Component
             'media' => json_encode([], JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES),
         ]);
         foreach ($this->project['media'] as $index => $media) {
-            if (gettype($media['image']) == 'object') {
-                $url = Upload::image($media['image'], $project);
-                $this->project['media'][$index]['image'] = $url;
+            if (gettype($media) == 'object') {
+                $url = Upload::image($media, $project);
+                if ($index == $this->project['cover'] && array_key_exists($index, $this->project['media'])) {
+                    $this->project['cover'] = $url;
+                }
+                $this->project['media'][$index] = $url;
             }
         }
-        $project->media = json_encode($this->project['media'], JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES);
+        $project->media = json_encode(array_values($this->project['media']), JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES);
+        $project->cover = $this->project['cover'];
         $project->save();
         self::getProjects();
         self::fresh();
@@ -127,7 +122,7 @@ new class extends Component
     {
         if ($property == 'media') {
             foreach ($this->media as $key => $image) {
-                array_push($this->project['media'], ['image' => $image, 'purpose' => 'general']);
+                array_push($this->project['media'], $image);
             }
             $this->media = [];
         }
@@ -152,6 +147,11 @@ addTag(){
 },
 removeTag(key){
 this.work.tags.splice(key,1);
+},
+deleteImageServer(key){
+url = this.work.media[key];
+this.work.media.splice(key,1);
+$wire.deleteImage('server',key,url,this.work.media);
 }
 }">
     <section id="portfolio-management-container" class="grid grid-cols-2">
@@ -198,7 +198,8 @@ this.work.tags.splice(key,1);
                         </svg>
                         <span class="sr-only">Loading...</span>
                     </div>
-                    <button x-on:click="$wire.fresh()" class="bg-gray-100 cursor-pointer active:opacity-50 font-normal border border-gray-300 text-xl p-3 py-1">Clear</button>
+                    <button x-on:click="$wire.fresh()"
+                        class="bg-gray-100 cursor-pointer active:opacity-50 font-normal border border-gray-300 text-xl p-3 py-1">Clear</button>
                 </h1>
                 <p class="text-gray-500 text-[1rem]">Enter your portfolio projects here</p>
             </hgroup>
@@ -214,19 +215,19 @@ this.work.tags.splice(key,1);
                             <div class="flex gap-2">
                                 <div
                                     class="h-full w-[120px] min-w-[120px] border border-gray-400 bg-gray-100 flex items-center justify-center">
-                                    @if(gettype($media['image']) == 'object')
-                                    <img class="max-w-[80%] max-h-full" src="{{ $media['image']->temporaryUrl() }}">
+                                    @if(gettype($media) == 'object')
+                                    <img class="max-w-[80%] max-h-full" src="{{ $media->temporaryUrl() }}">
                                     @else
-                                    <img class="max-w-[80%] max-h-full" src="{{ $media['image'] }}">
+                                    <img class="max-w-[80%] max-h-full" src="{{ $media }}">
                                     @endif
                                 </div>
                                 <div class="flex flex-col">
-                                    @if(gettype($media['image']) == 'object')
+                                    @if(gettype($media) == 'object')
                                     <i x-on:click="$wire.deleteImage('local',{{ $key }},null)"
                                         class="bi bi-trash cursor-pointer hover:opacity-50 bg-red-50 text-red-500 border border-red-500 w-[30px] h-[30px] flex items-center justify-center">
                                     </i>
                                     @else
-                                    <i x-on:click="$wire.deleteImage('server',{{ $key }},'{{ $media['image'] }}')"
+                                    <i x-on:click="deleteImageServer({{ $key }})"
                                         class="bi bi-trash cursor-pointer hover:opacity-50 bg-red-50 text-red-500 border border-red-500 w-[30px] h-[30px] flex items-center justify-center">
                                     </i>
                                     @endif
@@ -237,7 +238,7 @@ this.work.tags.splice(key,1);
                                         class="bi bi-arrow-left border cursor-pointer hover:opacity-50 border-gray-4000 w-[30px] h-[30px] flex items-center justify-center">
                                     </i>
                                     <i x-on:click="$wire.editImages('cover',{{ $key }},null)"
-                                        class="bi bi bi-image {{ $media['purpose'] == 'cover' ? 'bg-blue-50 border-blue-500 text-blue-500' : null }} border cursor-pointer hover:opacity-50 border-gray-4000 w-[30px] h-[30px] flex items-center justify-center">
+                                        class="bi bi bi-image {{ gettype($project['cover']) == 'string' ? ($project['cover'] === $media ? 'bg-blue-50 text-blue-500 border-blue-500' : null) : ($project['cover'] === $key ? 'bg-blue-50 text-blue-500 border-blue-500' : null) }} border cursor-pointer hover:opacity-50 border-gray-4000 w-[30px] h-[30px] flex items-center justify-center">
                                     </i>
                                 </div>
                             </div>
@@ -250,6 +251,10 @@ this.work.tags.splice(key,1);
                         <input wire:model='media' hidden multiple type="file" name="supporting-media-upload"
                             id="supporting-media-upload">
                     </div>
+                </div>
+                <div class="input flex flex-col gap-1">
+                    <label>Cover</label>
+                    <p class="break-all" x-text="work.cover"></p>
                 </div>
                 <div class="input flex flex-col gap-1">
                     <label>Name</label>
